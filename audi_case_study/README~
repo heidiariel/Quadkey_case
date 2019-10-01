@@ -1,0 +1,41 @@
+### run GenerateLocationInfo
+
+# upload data to HDFS
+
+hadoop fs -mkdir audi_case_study
+hadoop fs -put ~/Desktop/audi_case_study/data audi_case_study
+
+# change to the script dirctory
+
+cd /home/cloudera/PythonProjects/proj_audi_case_study/
+
+# launch the job with spark-submit
+
+spark-submit --master spark://quickstart.cloudera:7077 --py-files quadkey.zip generate_location_info.py
+
+# launch the job in interactive mode with pyspark
+
+pyspark --master spark://quickstart.cloudera:7077 --py-files quadkey.zip
+
+
+### run ReportADGeoQK
+
+# launch the job with spark-submit
+
+spark-submit --master spark://quickstart.cloudera:7077 --py-files quadkey_template_db.py --files /home/cloudera/PythonProjects/proj_audi_case_study/region_template/qk_cn.csv report_ad_geo_qk.py
+
+# launch the job in interactive mode with pyspark
+
+pyspark --master spark://quickstart.cloudera:7077 --py-files quadkey_template_db.py --files /home/cloudera/PythonProjects/proj_audi_case_study/region_template/qk_cn.csv
+
+
+### run ReportADGeoQK (Broadcast Variable version)
+
+# launch the job with spark-submit
+
+spark-submit --master spark://quickstart.cloudera:7077 --py-files quadkey_template_db.py report_ad_geo_qk_bc.py
+
+# launch the job in interactive mode with pyspark
+
+pyspark --master spark://quickstart.cloudera:7077 --py-files quadkey_template_db.py
+
